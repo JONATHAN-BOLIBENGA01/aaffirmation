@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -32,8 +34,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.affirmation.data.CountrySource
 import com.example.affirmation.data.Datasource
 import com.example.affirmation.model.Affirmation
+import com.example.affirmation.model.Country
 import com.example.affirmation.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,7 +46,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                AffirmationsApp()
+//                AffirmationsApp()
+
+                CountriesApp()
             }
         }
     }
@@ -51,66 +57,124 @@ class MainActivity : ComponentActivity() {
 
 
 
+
 @Composable
-fun AffirmationsApp() {
-    val layoutDirection = LocalLayoutDirection.current
-    Surface(
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-            .padding(
-                start = WindowInsets.safeDrawing.asPaddingValues()
-                    .calculateStartPadding(layoutDirection),
-                end = WindowInsets.safeDrawing.asPaddingValues()
-                    .calculateEndPadding(layoutDirection),
-            ),
-    ) {
-        AffirmationList(
-            affirmationList = Datasource().loadAffirmations(),
+fun CountriesApp() {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        CountryList(
+            countryList = CountrySource.loadCountrie(),
+            modifier = Modifier.padding(16.dp)
         )
     }
 }
 
-
-
-
-
+@Composable
+fun CountryList(countryList: List<Country>, modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
+        items(countryList) { country ->
+            CountryItem(country = country, modifier = Modifier.padding(8.dp))
+        }
+    }
+}
 
 @Composable
-fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
+fun CountryItem(country: Country, modifier: Modifier = Modifier) {
+    Row(modifier = modifier.fillMaxWidth()) {
+        // Image du drapeau
+        Image(
+            painter = painterResource(country.imageResourceId),
+            contentDescription = "${country.name} flag",
+            modifier = Modifier
+                .size(64.dp)
+                .padding(end = 8.dp),
+            contentScale = ContentScale.Crop
+        )
+
+        // Texte : nom du pays et capitale
         Column {
-            Image(
-                painter = painterResource(affirmation.imageResourceId),
-                contentDescription = stringResource(affirmation.stringResourceId),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(194.dp),
-                contentScale = ContentScale.Crop
+            Text(
+                text = country.name,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(bottom = 4.dp)
             )
             Text(
-                text = LocalContext.current.getString(affirmation.stringResourceId),
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.headlineSmall
+                text = "Capital: ${country.capital}",
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun AffirmationCardPreview() {
-    AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1))
-}
-
-@Composable
-fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier) {
-        items(affirmationList) { affirmation ->
-            AffirmationCard(
-                affirmation = affirmation,
-                modifier = Modifier.padding(8.dp)
-            )
-        }
+fun PreviewCountryList() {
+    MyApplicationTheme {
+        CountriesApp()
     }
 }
+
+
+//
+//@Composable
+//fun AffirmationsApp() {
+//    val layoutDirection = LocalLayoutDirection.current
+//    Surface(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .statusBarsPadding()
+//            .padding(
+//                start = WindowInsets.safeDrawing.asPaddingValues()
+//                    .calculateStartPadding(layoutDirection),
+//                end = WindowInsets.safeDrawing.asPaddingValues()
+//                    .calculateEndPadding(layoutDirection),
+//            ),
+//    ) {
+//        AffirmationList(
+//            affirmationList = Datasource().loadAffirmations(),
+//        )
+//    }
+//}
+//
+//
+//
+//
+//
+//
+//@Composable
+//fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
+//    Card(modifier = modifier) {
+//        Column {
+//            Image(
+//                painter = painterResource(affirmation.imageResourceId),
+//                contentDescription = stringResource(affirmation.stringResourceId),
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(194.dp),
+//                contentScale = ContentScale.Crop
+//            )
+//            Text(
+//                text = LocalContext.current.getString(affirmation.stringResourceId),
+//                modifier = Modifier.padding(16.dp),
+//                style = MaterialTheme.typography.headlineSmall
+//            )
+//        }
+//    }
+//}
+//
+//@Preview
+//@Composable
+//private fun AffirmationCardPreview() {
+//    AffirmationCard(Affirmation(R.string.affirmation1, R.drawable.image1))
+//}
+//
+//@Composable
+//fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Modifier) {
+//    LazyColumn(modifier = modifier) {
+//        items(affirmationList) { affirmation ->
+//            AffirmationCard(
+//                affirmation = affirmation,
+//                modifier = Modifier.padding(8.dp)
+//            )
+//        }
+//    }
+//}
