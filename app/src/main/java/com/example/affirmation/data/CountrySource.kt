@@ -4,33 +4,19 @@ import com.example.affirmation.model.Country
 
 
 class CountrySource {
-    fun loadCountrie(): List<Country> {
-        return listOf(
-            Country("RD congo", "Paris", "FR", R.drawable.rdc),
-            Country("Congo braza", "Ottawa", "CA", R.drawable.congobraza),
-            Country("Angola", "Tokyo", "JP", R.drawable.angola),
-            Country("Republique sud Africain", "Brasília", "BR", R.drawable.rsa),
-            Country("Egypte", "Berlin", "DE", R.drawable.egypte) ,
-            Country("Algerie", "Berlin", "DE", R.drawable.algerie),
-            Country("Mauritanie", "Berlin", "DE", R.drawable.mauritanie),
-            Country("Niger", "Berlin", "DE", R.drawable.niger),
-            Country("Tunisie", "Berlin", "DE", R.drawable.tunisie)
-
-        )
-    }
 
     companion object {
         fun loadCountrie(): List<Country> {
             return listOf(
-                Country("RD congo", "Paris", "FR", R.drawable.rdc),
-                Country("Congo braza", "Ottawa", "CA", R.drawable.congobraza),
-                Country("Angola", "Tokyo", "JP", R.drawable.angola),
-                Country("Republique sud Africain", "Brasília", "BR", R.drawable.rsa),
-                Country("Egypte", "Berlin", "DE", R.drawable.egypte) ,
-                Country("Algerie", "Berlin", "DE", R.drawable.algerie),
-                Country("Mauritanie", "Berlin", "DE", R.drawable.mauritanie),
-                Country("Niger", "Berlin", "DE", R.drawable.niger),
-                Country("Tunisie", "Berlin", "DE", R.drawable.tunisie)
+                Country("RD congo", "Kinshasa", "243", R.drawable.rdc),
+                Country("Congo braza", "Brazavile", "", R.drawable.congobraza),
+                Country("Angola", "Lunada", "", R.drawable.angola),
+                Country("Republique sud Africain", "", "BR", R.drawable.rsa),
+                Country("Egypte", "Caire", "DE", R.drawable.egypte) ,
+                Country("Algerie", "Alger", "DE", R.drawable.algerie),
+                Country("Mauritanie", "Nouakchott", "DE", R.drawable.mauritanie),
+                Country("Niger", "Niamey", "DE", R.drawable.niger),
+                Country("Tunisie", "Tunis", "DE", R.drawable.tunisie)
 
             )
         }

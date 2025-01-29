@@ -80,7 +80,7 @@ fun CountryList(countryList: List<Country>, modifier: Modifier = Modifier) {
 @Composable
 fun CountryItem(country: Country, modifier: Modifier = Modifier) {
     Row(modifier = modifier.fillMaxWidth()) {
-        // Image du drapeau
+
         Image(
             painter = painterResource(country.imageResourceId),
             contentDescription = "${country.name} flag",
@@ -90,7 +90,7 @@ fun CountryItem(country: Country, modifier: Modifier = Modifier) {
             contentScale = ContentScale.Crop
         )
 
-        // Texte : nom du pays et capitale
+
         Column {
             Text(
                 text = country.name,
@@ -99,7 +99,7 @@ fun CountryItem(country: Country, modifier: Modifier = Modifier) {
             )
             Text(
                 text = "Capital: ${country.capital}",
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodyLarge
             )
         }
     }
